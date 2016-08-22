@@ -3,11 +3,15 @@ var router = express.Router();
 
 
 
+// Client ID and client secret are available at
+// https://code.google.com/apis/console
+var CLIENT_ID = '729752977457-05p52ts4knqqeljagpibl2sqlfko51n2.apps.googleusercontent.com';
+var CLIENT_SECRET = '_Vzf2Ih1yjjQ23H_L1V-B7v6';
+var REDIRECT_URL = 'http://localhost:1337/goauth/goauthcallback';
 
-
-var CLIENT_ID = 'YOUR CLIENT ID HERE';
-var CLIENT_SECRET = 'YOUR CLIENT SECRET HERE';
-var REDIRECT_URL = 'YOUR REDIRECT URL HERE';
+//var CLIENT_ID = 'YOUR CLIENT ID HERE';
+//var CLIENT_SECRET = 'YOUR CLIENT SECRET HERE';
+//var REDIRECT_URL = 'YOUR REDIRECT URL HERE';
 
 var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
@@ -15,8 +19,7 @@ var OAuth2 = google.auth.OAuth2;
 var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
 
 var scopes = [
-    'https://www.googleapis.com/auth/plus.me',
-    'https://www.googleapis.com/auth/calendar'
+    'https://www.googleapis.com/auth/drive'
 ];
 
 

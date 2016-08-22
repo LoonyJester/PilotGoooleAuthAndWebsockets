@@ -1,0 +1,8 @@
+﻿extends ../layout
+
+block content
+  h1= title
+  p  #{title}
+  p Code: #{code}
+  p
+    a(href='/goauth/gettoken?code=#{code}') get token

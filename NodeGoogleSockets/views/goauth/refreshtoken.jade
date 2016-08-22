@@ -1,0 +1,11 @@
+﻿extends ../layout
+
+block content
+  h1= title
+  p  #{title}
+  p Code: #{code}
+  p Access_token: #{access_token}
+  p Token_type: #{token_type}
+  p Expiry_date: #{expiry_date}
+  p
+    a(href='/goauth/refreshtoken?code=#{code}') show Drive folders

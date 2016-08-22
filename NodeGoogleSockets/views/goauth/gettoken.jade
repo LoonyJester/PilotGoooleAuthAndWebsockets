@@ -1,0 +1,14 @@
+﻿extends ../layout
+
+block content
+    h1= title
+    p  #{title}
+    if err
+        p #{err}
+    else
+        p Code: #{code}
+        p Access_token: #{access_token}
+        p Token_type: #{token_type}
+        p Expiry_date: #{expiry_date}
+        p
+        a(href='/goauth/refreshtoken?code=#{code}&access_token=#{access_token}&token_type=#{token_type}&expiry_date=#{expiry_date}') refresh the token
