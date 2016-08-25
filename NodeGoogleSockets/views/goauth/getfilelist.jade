@@ -1,0 +1,12 @@
+﻿extends ../layout
+
+block content
+  h1= title
+  p  #{title}
+  p Files:
+    if files
+        ol
+            each item in files
+                li= item
+    else
+        p There is not files in 

@@ -1,7 +1,7 @@
 ﻿var express = require('express');
 var router = express.Router();
 
-
+var util = require('util');
 
 
 
@@ -44,8 +44,42 @@ router.get('/goauthcallback', function (req, res) {
     res.render('goauth/goauthcallback', locals);
 });
 
-router.get('/refreshtoken:code:access_token:token_type:expiry_date', function(req, res) {
-    
+router.get('/getfilelist', function(req, res) {
+
+    var tokens = {
+        access_token: req.query.access_token,
+        token_type: req.query.token_type,
+        expiry_date: req.query.expiry_date,
+        approval_prompt:'force'
+    };
+    var code = req.query.code;
+    var service = google.drive('v3');
+
+
+    service.files.list({
+        auth: oauth2Client,
+        pageSize: 10,
+        fields: "nextPageToken, files(id, name)"
+    }, function (err, response) {
+        if (err) {
+            console.log('The API returned an error: ' + err);
+            return;
+        }
+        var list = [];
+        var files = response.files;
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                list.push(util.format('%s (%s)', file.name, file.id));
+            }
+
+        var locals = {
+            title: "List of drive fies",
+            files: list.length > 0 ? list : null
+    }
+
+        res.render('goauth/getfilelist', locals);
+
+    });
 
 
 });
@@ -67,7 +101,7 @@ router.get('/gettoken',
                         code: code,
                         access_token: tokens.access_token,
                         token_type: tokens.token_type,
-                        expiry_date: tokens.access_token
+                        expiry_date: tokens.expiry_date
                     };
 
 
