@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-
+var passport = require('passport');
 
 var app = express();
 
@@ -13,9 +13,11 @@ var expressWs = require('express-ws')(app);
 //expressWs.applyTo(goauth);
 //goauth.setExpressWs(expressWs);
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var goauth = require('./routes/goauth');
+require('./config/passport')(passport); // pass passport for configuration
+
+
+var routes = require('./routes/index')(passport);
+var account = require('./routes/account')(passport);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -33,6 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/goauth', goauth);
+app.use('/account', account);
 
 
 
