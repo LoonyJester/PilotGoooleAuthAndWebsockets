@@ -250,7 +250,6 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
-/NodeGoogleSockets/typings
-/NodeGoogleSockets/NodeGoogleSockets.njsproj
-/NodeGoogleSockets.sln
-/GoogleSockets/typings
+/GoogleSockets.njsproj
+/GoogleSockets.sln
+/typings
