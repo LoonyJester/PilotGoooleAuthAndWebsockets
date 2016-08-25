@@ -2,7 +2,7 @@
 var router = express.Router();
 
 var util = require('util');
-
+//var expressWs = null;
 
 
 
@@ -29,8 +29,9 @@ var scopes = [
 
 
 
-
-
+//router.setExpressWs = function (websockets) {
+//   expressWs = websockets;
+//};
 
 
 
@@ -117,6 +118,12 @@ router.get('/gettoken',
             });
     });
 
+router.ws('/getfilelist', function (ws, req) {
+   ws.on('message', function (msg) {
+      console.log(msg);
+   });
+   console.log('socket', req.testing);
+});
 
 
 module.exports = router;
