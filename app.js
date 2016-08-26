@@ -22,9 +22,7 @@ require('./models/passport')(passport); // pass passport for configuration
 var Routes = require('./routes/index');
 var Goauth = require('./routes/goauth');
 var Account = require('./routes/account')(passport);
-var Socket = require('./routes/socket')();
-
-//expressWs.applyTo(Socket);
+var Socket = require('./routes/socket')(expressWs);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
