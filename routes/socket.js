@@ -2,32 +2,26 @@
 var router = express.Router();
 
 
-module.exports = function(passport) {
+module.exports = function() {
 
-//    ws.applyTo(router);
-//
     router.ws('/testws',
-//        passport.isLoggedIn,
-        function(ws, req) {
+        function (ws, req) {
+            if (!req.isAuthenticated()) {
+                throw ("Not Authenticated");
+            }
+
+
             ws.on('message',
-                function(msg) {
+                function (msg) {
+                    var u = req.user;
                     console.log(msg);
+                    console.log(req.user.google.name + ' (' + req.user.google.email + ')');
+                    var p =process.memoryUsage();
+                    p.username = req.user.google.name;
+                    ws.send(JSON.stringify(p), function () { /* ignore errors */ });
                 });
             console.log('socket', req.testing);
         });
-
-
-
-
-//    app.ws('/socket/testws', function (ws, req) {
-//    ws.on('message', function (msg) {
-//        console.log(msg);
-//    });
-//    console.log('socket', req.testing);
-//});
-
-
-
 
     return router;
 };
