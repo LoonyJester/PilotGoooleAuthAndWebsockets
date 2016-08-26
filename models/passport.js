@@ -16,7 +16,7 @@ module.exports = function(passport) {
    });
 
 
-    passport.prototype.isLoggedIn = function(req, res, next) {
+    passport.isLoggedIn = function(req, res, next) {
         if (req.isAuthenticated())
             return next();
 
@@ -30,7 +30,7 @@ module.exports = function(passport) {
 
         clientID: "729752977457-05p52ts4knqqeljagpibl2sqlfko51n2.apps.googleusercontent.com",
         clientSecret: "_Vzf2Ih1yjjQ23H_L1V-B7v6",
-        callbackURL: "http://localhost:1337/goauth/goauthcallback",
+        callbackURL: "http://localhost:1337/account/google/callback",
         passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
 
     },
@@ -65,8 +65,9 @@ module.exports = function(passport) {
                         return done(null, user);
                     } else {
                         var newUser          = new User();
-
-                        newUser.google.id    = profile.id;
+                       newUser.google = {};
+                       newUser.id    = profile.id;
+                       newUser.google.id    = profile.id;
                         newUser.google.token = token;
                         newUser.google.name  = profile.displayName;
                         newUser.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email

@@ -1,0 +1,8 @@
+﻿extends ../layout
+
+block content
+	h1 User profile
+	p Id: #{user.id}
+	if user.google
+		p Name:	#{user.google.name}
+		p Email: #{user.google.email}

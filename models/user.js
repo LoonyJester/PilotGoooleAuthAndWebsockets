@@ -2,27 +2,30 @@
 var redis = require('redis').createClient();
 
 
+var User = function() {
 
-var user = function (data) {
+};
 
-}
+User.get = function(id, cb) {
+   redis.get('user' + id,
+      function (err, dbuser) {
+         if (dbuser) {
+            var gotted = new User();
+            gotted.google = JSON.parse(dbuser);
+            gotted.id = id;
+            return cb(err, gotted);
+         }
+         return cb(err, null);
+      });
+};
 
 
-user.prototype = {
+User.prototype = {
 
    save: function (cb) {
-      redis.set('user' + user.id, JSON.stringify(user.google),
+      redis.set('user' + this.id, JSON.stringify(this.google),
             function(err) {
                cb(err, null);
-            });
-   },
-   get: function (id, cb) {
-      redis.get('user' + user.id, 
-          function (err, saveduser) {
-              var gotted = new user();
-              gotted.google = JSON.parse(user);
-              gotted.id = user.id;
-                cb(err, gotted);
             });
    },
    generateHash: function (password) {
@@ -36,4 +39,4 @@ user.prototype = {
 };
 
 
-modu.exports = member;
+module.exports = User;

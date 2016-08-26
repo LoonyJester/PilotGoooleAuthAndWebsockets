@@ -5,7 +5,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+
 var passport = require('passport');
+var flash = require('connect-flash');
+var session = require('express-session');
 
 var app = express();
 
@@ -13,10 +16,11 @@ var expressWs = require('express-ws')(app);
 //expressWs.applyTo(goauth);
 //goauth.setExpressWs(expressWs);
 
-require('./config/passport')(passport); // pass passport for configuration
+require('./models/passport')(passport); // pass passport for configuration
 
 
-var routes = require('./routes/index')(passport);
+var routes = require('./routes/index');
+var goauth = require('./routes/goauth');
 var account = require('./routes/account')(passport);
 
 // view engine setup
@@ -32,8 +36,15 @@ app.use(cookieParser());
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+// required for passport
+app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+
+
 app.use('/', routes);
-app.use('/users', users);
 app.use('/goauth', goauth);
 app.use('/account', account);
 

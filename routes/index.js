@@ -2,7 +2,6 @@
 var router = express.Router();
 
 
-
 // Client ID and client secret are available at
 // https://code.google.com/apis/console
 var CLIENT_ID = '729752977457-05p52ts4knqqeljagpibl2sqlfko51n2.apps.googleusercontent.com';
