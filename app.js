@@ -13,15 +13,18 @@ var session = require('express-session');
 var app = express();
 
 var expressWs = require('express-ws')(app);
-//expressWs.applyTo(goauth);
-//goauth.setExpressWs(expressWs);
+
+
 
 require('./models/passport')(passport); // pass passport for configuration
 
 
-var routes = require('./routes/index');
-var goauth = require('./routes/goauth');
-var account = require('./routes/account')(passport);
+var Routes = require('./routes/index');
+var Goauth = require('./routes/goauth');
+var Account = require('./routes/account')(passport);
+require('./routes/socket')(app, passport);
+
+//expressWs.applyTo(Socket);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -44,9 +47,15 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 
-app.use('/', routes);
-app.use('/goauth', goauth);
-app.use('/account', account);
+app.use('/', Routes);
+app.use('/goauth', Goauth);
+app.use('/account', Account);
+
+
+
+
+
+
 
 
 

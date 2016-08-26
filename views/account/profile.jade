@@ -1,8 +1,18 @@
 ﻿extends ../layout
 
 block content
+	script(src='/javascripts/web-sockets.js')
 	h1 User profile
+	h2 Account info
 	p Id: #{user.id}
 	if user.google
 		p Name:	#{user.google.name}
 		p Email: #{user.google.email}
+	p --------------------------------------------------------------
+	h2 Socket info
+	p RSS: 
+		div(id='rss') 111
+	p Heap total: 
+		div(id='heapTotal') 2222
+	p Heap used: 
+		div(id='heapUsed') 3333
