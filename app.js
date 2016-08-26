@@ -22,7 +22,7 @@ require('./models/passport')(passport); // pass passport for configuration
 var Routes = require('./routes/index');
 var Goauth = require('./routes/goauth');
 var Account = require('./routes/account')(passport);
-require('./routes/socket')(app, passport);
+var Socket = require('./routes/socket')(passport);
 
 //expressWs.applyTo(Socket);
 
@@ -50,6 +50,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 app.use('/', Routes);
 app.use('/goauth', Goauth);
 app.use('/account', Account);
+app.use('/socket', Socket);
 
 
 
